@@ -19,5 +19,8 @@ Use `test.sh` to create 100 revisions of a file in git and mercurial. Only a sin
 I searched the longest wikipedia article, and "List of snakes" came up (in German). So this is our fileset in target.html. I created it by using: `wget -O target.html https://de.wikipedia.org/wiki/Liste_der_Schlangenarten`
 
 ## Results
-Final directory size in kb git: 97544 and in hg: 10004
-
+Final directory size in kb:
+```
+git:  9980 -> 97544
+hg:  10320 -> 10004
+```
