@@ -9,7 +9,10 @@ GIT_LOG=git-test.log
 HG_DIR=hg-test
 HG_LOG=hg-test.log
 
-COUNT=3
+COUNT=100
+
+# --- cleanup ---
+rm -Rf $HG_DIR $GIT_DIR
 
 # --- git ---
 echo "Testing git"
@@ -22,9 +25,10 @@ git add $TARGET
 git commit -m "Initial commit"
 
 for i in $(seq $COUNT); do
+    echo "GIT $i"
     sed -i $TARGET -e "s/footer-icons/footer-icons\nEXTRA CONTENT/"
     SIZE_PRE=$(du -d 0 .)
-    git commit -am "change $i"
+    git commit -am "change $i" > /dev/null
     SIZE_POST=$(du -d 0 .)
 
     echo "CHANGE #$i SIZE pre:$SIZE_PRE post:$SIZE_POST" >> ../$GIT_LOG
@@ -43,6 +47,7 @@ hg add $TARGET
 hg commit -m "Initial commit"
 
 for i in $(seq $COUNT); do
+    echo "HG $i"
     sed -i $TARGET -e "s/footer-icons/footer-icons\nEXTRA CONTENT/"
     SIZE_PRE=$(du -d 0 .)
     hg commit -m "change $i"
@@ -53,4 +58,4 @@ for i in $(seq $COUNT); do
 done
 cd ..
 
-echo "Final directory size in kb git:$LAST_GIT_SIZE and in hg:$LAST_HG_SIZE
+echo "Final directory size in kb git:$LAST_GIT_SIZE and in hg:$LAST_HG_SIZE"
